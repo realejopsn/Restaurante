@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a8f6d3450ff345bd9ac96304337816c5" Name="Diagram1">
+        <EntityTypeShape EntityType="RestauranteModel.CategoriaPlato" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Cliente" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.DetalleFacturaPlato" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.DetalleMenu" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Factura" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Menu" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Mesa" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.MetodoDePago" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Plato" Width="1.5" PointX="5.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.TipoDeUsuario" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestauranteModel.Usuario" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="RestauranteModel.FK_Plato_CategoriaPlato" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_Factura_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_DetalleFacturaPlato_Factura" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_DetalleFacturaPlato_Plato" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_DetalleMenu_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_DetalleMenu_Plato" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_Factura_Mesa" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_Factura_MetodoDePago" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_Factura_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="RestauranteModel.FK_Usuario_TipoDeUsuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

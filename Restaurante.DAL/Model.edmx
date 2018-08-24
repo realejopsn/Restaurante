@@ -1,0 +1,836 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RestauranteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CategoriaPlato">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cedula" Type="varchar" MaxLength="50" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Apellido" Type="varchar" MaxLength="200" />
+          <Property Name="Telefono" Type="int" />
+          <Property Name="Direccion" Type="varchar" MaxLength="200" />
+          <Property Name="Correo" Type="varchar" MaxLength="200" />
+          <Property Name="FechaDeNacimiento" Type="date" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaPlato">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaPlato" />
+          </Key>
+          <Property Name="IdDetalleFacturaPlato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFactura" Type="int" Nullable="false" />
+          <Property Name="IdPlato" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Notas" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DetalleMenu">
+          <Key>
+            <PropertyRef Name="IdDetalleMenu" />
+          </Key>
+          <Property Name="IdDetalleMenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMenu" Type="int" Nullable="false" />
+          <Property Name="IdPlato" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MontoTotal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="IdMesa" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdTipoDePago" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="IdMenu" />
+          </Key>
+          <Property Name="IdMenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mesa">
+          <Key>
+            <PropertyRef Name="IdMesa" />
+          </Key>
+          <Property Name="IdMesa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroMesa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CantidadDeEspacios" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetodoDePago">
+          <Key>
+            <PropertyRef Name="IdTipoDePago" />
+          </Key>
+          <Property Name="IdTipoDePago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MetodoDePago" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Plato">
+          <Key>
+            <PropertyRef Name="IdPlato" />
+          </Key>
+          <Property Name="IdPlato" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="IdCategoriaPlato" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoDeUsuario">
+          <Key>
+            <PropertyRef Name="IdTipoDeUsuario" />
+          </Key>
+          <Property Name="IdTipoDeUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="int" Nullable="false" />
+          <Property Name="Contrasenna" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cedula" Type="int" Nullable="false" />
+          <Property Name="IdTipoDeUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DetalleFacturaPlato_Factura">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="DetalleFacturaPlato" Type="Self.DetalleFacturaPlato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="DetalleFacturaPlato">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleFacturaPlato_Plato">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="DetalleFacturaPlato" Type="Self.DetalleFacturaPlato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="IdPlato" />
+            </Principal>
+            <Dependent Role="DetalleFacturaPlato">
+              <PropertyRef Name="IdPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMenu_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="DetalleMenu" Type="Self.DetalleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="IdMenu" />
+            </Principal>
+            <Dependent Role="DetalleMenu">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMenu_Plato">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="DetalleMenu" Type="Self.DetalleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="IdPlato" />
+            </Principal>
+            <Dependent Role="DetalleMenu">
+              <PropertyRef Name="IdPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Mesa">
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesa">
+              <PropertyRef Name="IdMesa" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdMesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_MetodoDePago">
+          <End Role="MetodoDePago" Type="Self.MetodoDePago" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetodoDePago">
+              <PropertyRef Name="IdTipoDePago" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdTipoDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Plato_CategoriaPlato">
+          <End Role="CategoriaPlato" Type="Self.CategoriaPlato" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaPlato">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="IdCategoriaPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_TipoDeUsuario">
+          <End Role="TipoDeUsuario" Type="Self.TipoDeUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDeUsuario">
+              <PropertyRef Name="IdTipoDeUsuario" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdTipoDeUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="RestauranteModelStoreContainer">
+          <EntitySet Name="CategoriaPlato" EntityType="Self.CategoriaPlato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleFacturaPlato" EntityType="Self.DetalleFacturaPlato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleMenu" EntityType="Self.DetalleMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mesa" EntityType="Self.Mesa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetodoDePago" EntityType="Self.MetodoDePago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Plato" EntityType="Self.Plato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDeUsuario" EntityType="Self.TipoDeUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DetalleFacturaPlato_Factura" Association="Self.FK_DetalleFacturaPlato_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="DetalleFacturaPlato" EntitySet="DetalleFacturaPlato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFacturaPlato_Plato" Association="Self.FK_DetalleFacturaPlato_Plato">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="DetalleFacturaPlato" EntitySet="DetalleFacturaPlato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMenu_Menu" Association="Self.FK_DetalleMenu_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="DetalleMenu" EntitySet="DetalleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMenu_Plato" Association="Self.FK_DetalleMenu_Plato">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="DetalleMenu" EntitySet="DetalleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Mesa" Association="Self.FK_Factura_Mesa">
+            <End Role="Mesa" EntitySet="Mesa" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_MetodoDePago" Association="Self.FK_Factura_MetodoDePago">
+            <End Role="MetodoDePago" EntitySet="MetodoDePago" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Usuario" Association="Self.FK_Factura_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Plato_CategoriaPlato" Association="Self.FK_Plato_CategoriaPlato">
+            <End Role="CategoriaPlato" EntitySet="CategoriaPlato" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_TipoDeUsuario" Association="Self.FK_Usuario_TipoDeUsuario">
+            <End Role="TipoDeUsuario" EntitySet="TipoDeUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestauranteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CategoriaPlato">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Plato" Relationship="Self.FK_Plato_CategoriaPlato" FromRole="CategoriaPlato" ToRole="Plato" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cedula" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="Int32" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FechaDeNacimiento" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Cliente" FromRole="Cliente" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="DetalleFacturaPlato">
+          <Key>
+            <PropertyRef Name="IdDetalleFacturaPlato" />
+          </Key>
+          <Property Name="IdDetalleFacturaPlato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFactura" Type="Int32" Nullable="false" />
+          <Property Name="IdPlato" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_DetalleFacturaPlato_Factura" FromRole="DetalleFacturaPlato" ToRole="Factura" />
+          <NavigationProperty Name="Plato" Relationship="Self.FK_DetalleFacturaPlato_Plato" FromRole="DetalleFacturaPlato" ToRole="Plato" />
+        </EntityType>
+        <EntityType Name="DetalleMenu">
+          <Key>
+            <PropertyRef Name="IdDetalleMenu" />
+          </Key>
+          <Property Name="IdDetalleMenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMenu" Type="Int32" Nullable="false" />
+          <Property Name="IdPlato" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_DetalleMenu_Menu" FromRole="DetalleMenu" ToRole="Menu" />
+          <NavigationProperty Name="Plato" Relationship="Self.FK_DetalleMenu_Plato" FromRole="DetalleMenu" ToRole="Plato" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="IdFactura" />
+          </Key>
+          <Property Name="IdFactura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MontoTotal" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMesa" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDePago" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Factura_Cliente" FromRole="Factura" ToRole="Cliente" />
+          <NavigationProperty Name="DetalleFacturaPlato" Relationship="Self.FK_DetalleFacturaPlato_Factura" FromRole="Factura" ToRole="DetalleFacturaPlato" />
+          <NavigationProperty Name="Mesa" Relationship="Self.FK_Factura_Mesa" FromRole="Factura" ToRole="Mesa" />
+          <NavigationProperty Name="MetodoDePago" Relationship="Self.FK_Factura_MetodoDePago" FromRole="Factura" ToRole="MetodoDePago" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Factura_Usuario" FromRole="Factura" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="IdMenu" />
+          </Key>
+          <Property Name="IdMenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DetalleMenu" Relationship="Self.FK_DetalleMenu_Menu" FromRole="Menu" ToRole="DetalleMenu" />
+        </EntityType>
+        <EntityType Name="Mesa">
+          <Key>
+            <PropertyRef Name="IdMesa" />
+          </Key>
+          <Property Name="IdMesa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroMesa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CantidadDeEspacios" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Mesa" FromRole="Mesa" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="MetodoDePago">
+          <Key>
+            <PropertyRef Name="IdTipoDePago" />
+          </Key>
+          <Property Name="IdTipoDePago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MetodoDePago1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_MetodoDePago" FromRole="MetodoDePago" ToRole="Factura" />
+        </EntityType>
+        <EntityType Name="Plato">
+          <Key>
+            <PropertyRef Name="IdPlato" />
+          </Key>
+          <Property Name="IdPlato" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="IdCategoriaPlato" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CategoriaPlato" Relationship="Self.FK_Plato_CategoriaPlato" FromRole="Plato" ToRole="CategoriaPlato" />
+          <NavigationProperty Name="DetalleFacturaPlato" Relationship="Self.FK_DetalleFacturaPlato_Plato" FromRole="Plato" ToRole="DetalleFacturaPlato" />
+          <NavigationProperty Name="DetalleMenu" Relationship="Self.FK_DetalleMenu_Plato" FromRole="Plato" ToRole="DetalleMenu" />
+        </EntityType>
+        <EntityType Name="TipoDeUsuario">
+          <Key>
+            <PropertyRef Name="IdTipoDeUsuario" />
+          </Key>
+          <Property Name="IdTipoDeUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_TipoDeUsuario" FromRole="TipoDeUsuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="Int32" Nullable="false" />
+          <Property Name="Contrasenna" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cedula" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDeUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Factura" Relationship="Self.FK_Factura_Usuario" FromRole="Usuario" ToRole="Factura" />
+          <NavigationProperty Name="TipoDeUsuario" Relationship="Self.FK_Usuario_TipoDeUsuario" FromRole="Usuario" ToRole="TipoDeUsuario" />
+        </EntityType>
+        <Association Name="FK_Plato_CategoriaPlato">
+          <End Role="CategoriaPlato" Type="Self.CategoriaPlato" Multiplicity="1" />
+          <End Role="Plato" Type="Self.Plato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaPlato">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="Plato">
+              <PropertyRef Name="IdCategoriaPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleFacturaPlato_Factura">
+          <End Role="Factura" Type="Self.Factura" Multiplicity="1" />
+          <End Role="DetalleFacturaPlato" Type="Self.DetalleFacturaPlato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factura">
+              <PropertyRef Name="IdFactura" />
+            </Principal>
+            <Dependent Role="DetalleFacturaPlato">
+              <PropertyRef Name="IdFactura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleFacturaPlato_Plato">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="DetalleFacturaPlato" Type="Self.DetalleFacturaPlato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="IdPlato" />
+            </Principal>
+            <Dependent Role="DetalleFacturaPlato">
+              <PropertyRef Name="IdPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMenu_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="DetalleMenu" Type="Self.DetalleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="IdMenu" />
+            </Principal>
+            <Dependent Role="DetalleMenu">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleMenu_Plato">
+          <End Role="Plato" Type="Self.Plato" Multiplicity="1" />
+          <End Role="DetalleMenu" Type="Self.DetalleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Plato">
+              <PropertyRef Name="IdPlato" />
+            </Principal>
+            <Dependent Role="DetalleMenu">
+              <PropertyRef Name="IdPlato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Mesa">
+          <End Role="Mesa" Type="Self.Mesa" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mesa">
+              <PropertyRef Name="IdMesa" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdMesa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_MetodoDePago">
+          <End Role="MetodoDePago" Type="Self.MetodoDePago" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetodoDePago">
+              <PropertyRef Name="IdTipoDePago" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdTipoDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Factura_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_TipoDeUsuario">
+          <End Role="TipoDeUsuario" Type="Self.TipoDeUsuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDeUsuario">
+              <PropertyRef Name="IdTipoDeUsuario" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdTipoDeUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RestauranteEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CategoriaPlato" EntityType="Self.CategoriaPlato" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="DetalleFacturaPlato" EntityType="Self.DetalleFacturaPlato" />
+          <EntitySet Name="DetalleMenu" EntityType="Self.DetalleMenu" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" />
+          <EntitySet Name="Menu" EntityType="Self.Menu" />
+          <EntitySet Name="Mesa" EntityType="Self.Mesa" />
+          <EntitySet Name="MetodoDePago" EntityType="Self.MetodoDePago" />
+          <EntitySet Name="Plato" EntityType="Self.Plato" />
+          <EntitySet Name="TipoDeUsuario" EntityType="Self.TipoDeUsuario" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Plato_CategoriaPlato" Association="Self.FK_Plato_CategoriaPlato">
+            <End Role="CategoriaPlato" EntitySet="CategoriaPlato" />
+            <End Role="Plato" EntitySet="Plato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Cliente" Association="Self.FK_Factura_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFacturaPlato_Factura" Association="Self.FK_DetalleFacturaPlato_Factura">
+            <End Role="Factura" EntitySet="Factura" />
+            <End Role="DetalleFacturaPlato" EntitySet="DetalleFacturaPlato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFacturaPlato_Plato" Association="Self.FK_DetalleFacturaPlato_Plato">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="DetalleFacturaPlato" EntitySet="DetalleFacturaPlato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMenu_Menu" Association="Self.FK_DetalleMenu_Menu">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="DetalleMenu" EntitySet="DetalleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleMenu_Plato" Association="Self.FK_DetalleMenu_Plato">
+            <End Role="Plato" EntitySet="Plato" />
+            <End Role="DetalleMenu" EntitySet="DetalleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Mesa" Association="Self.FK_Factura_Mesa">
+            <End Role="Mesa" EntitySet="Mesa" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_MetodoDePago" Association="Self.FK_Factura_MetodoDePago">
+            <End Role="MetodoDePago" EntitySet="MetodoDePago" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Factura_Usuario" Association="Self.FK_Factura_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_TipoDeUsuario" Association="Self.FK_Usuario_TipoDeUsuario">
+            <End Role="TipoDeUsuario" EntitySet="TipoDeUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(RestauranteModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(RestauranteModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RestauranteModelStoreContainer" CdmEntityContainer="RestauranteEntities">
+          <EntitySetMapping Name="CategoriaPlato">
+            <EntityTypeMapping TypeName="RestauranteModel.CategoriaPlato">
+              <MappingFragment StoreEntitySet="CategoriaPlato">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="RestauranteModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="FechaDeNacimiento" ColumnName="FechaDeNacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleFacturaPlato">
+            <EntityTypeMapping TypeName="RestauranteModel.DetalleFacturaPlato">
+              <MappingFragment StoreEntitySet="DetalleFacturaPlato">
+                <ScalarProperty Name="IdDetalleFacturaPlato" ColumnName="IdDetalleFacturaPlato" />
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+                <ScalarProperty Name="IdPlato" ColumnName="IdPlato" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Notas" ColumnName="Notas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleMenu">
+            <EntityTypeMapping TypeName="RestauranteModel.DetalleMenu">
+              <MappingFragment StoreEntitySet="DetalleMenu">
+                <ScalarProperty Name="IdDetalleMenu" ColumnName="IdDetalleMenu" />
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="IdPlato" ColumnName="IdPlato" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factura">
+            <EntityTypeMapping TypeName="RestauranteModel.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="IdFactura" ColumnName="IdFactura" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdMesa" ColumnName="IdMesa" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdTipoDePago" ColumnName="IdTipoDePago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="RestauranteModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mesa">
+            <EntityTypeMapping TypeName="RestauranteModel.Mesa">
+              <MappingFragment StoreEntitySet="Mesa">
+                <ScalarProperty Name="IdMesa" ColumnName="IdMesa" />
+                <ScalarProperty Name="NumeroMesa" ColumnName="NumeroMesa" />
+                <ScalarProperty Name="CantidadDeEspacios" ColumnName="CantidadDeEspacios" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetodoDePago">
+            <EntityTypeMapping TypeName="RestauranteModel.MetodoDePago">
+              <MappingFragment StoreEntitySet="MetodoDePago">
+                <ScalarProperty Name="IdTipoDePago" ColumnName="IdTipoDePago" />
+                <ScalarProperty Name="MetodoDePago1" ColumnName="MetodoDePago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Plato">
+            <EntityTypeMapping TypeName="RestauranteModel.Plato">
+              <MappingFragment StoreEntitySet="Plato">
+                <ScalarProperty Name="IdPlato" ColumnName="IdPlato" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdCategoriaPlato" ColumnName="IdCategoriaPlato" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDeUsuario">
+            <EntityTypeMapping TypeName="RestauranteModel.TipoDeUsuario">
+              <MappingFragment StoreEntitySet="TipoDeUsuario">
+                <ScalarProperty Name="IdTipoDeUsuario" ColumnName="IdTipoDeUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="RestauranteModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="IdTipoDeUsuario" ColumnName="IdTipoDeUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="RestauranteModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="RestauranteModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="RestauranteModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="RestauranteModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RestauranteModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="RestauranteModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RestauranteModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="RestauranteModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="RestauranteModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
